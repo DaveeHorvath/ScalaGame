@@ -80,6 +80,3 @@ object AdventureTextUI:
       // move back up
       Thread.sleep(200)
   }
-
-def takeInput: Future[Unit] =
-  
