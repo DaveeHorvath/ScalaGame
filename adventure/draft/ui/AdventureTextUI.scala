@@ -15,7 +15,7 @@ object AdventureTextUI:
     var posX = 0
     var posY = 0
     var character =
-      "------:"+
+      "      :"+
       " #### :"+
       " #  # :"+
       " #  # :"+
