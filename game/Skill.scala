@@ -9,7 +9,7 @@ import scala.collection.mutable.Map
    3. HUG  - The skill player can gain when completing the Grandma's Kitchen level. Reduces the damage caused by the Sheep in
              level Wolf&Sheep Fight from 15 to 10 [LOOK CHARACTER->SHEEP]. 
 
-  All skills have
+   All skills have
    @param name        - skill's name
    @param description - skill's description */
 
