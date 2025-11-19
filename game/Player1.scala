@@ -33,5 +33,13 @@ class Player1(initialPosition: Level): // change int to something else
   /* returns current position of a player */
   def position = this.currentPosition
 
+  /* Method allowing the player to move from one location to the other. Player moves to the location given by the direction, as assigned in the "World". 
+     If a location exists, the player's position is updated the communicate "You go ..." is displayed. If the location is invalid, the player states in the same position
+     and communicates "You can't go ..." appreas */
+   def go(direction: String) =
+    val destination = this.currentPosition.neighbor(direction)
+    this.currentPosition = destination.getOrElse(this.currentPosition)
+    if destination.isDefined then s"You go $direction." else s"You can't go $direction."
+
 end Player1
 

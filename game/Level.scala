@@ -38,10 +38,33 @@ class Level(name: String, description: String):
   
   
   
-  
   /* SUBCLASSES FOR DIFFERENT LEVELS */
-  
-  class Riddles(name: String, description: String) extends Level(name, description):
-    ???
-  class FightSceane(name: String, description: String) extends Level(name, description):
-    ???
+
+  /* Special subclass for level 1: Glass Ball of Wisdom. The level is essentially a riddle. The player is asked three riddles,
+     and if they collect the correct answer, they are rewarded with obtaining an additional skill [Look: World]. */
+class RiddlesLevel(name: String, description: String) extends Level(name, description):
+
+    /* variable lists riddles available in the chapter and their answers in the form of Map */
+  private val riddlesAndAnswers = Map[String, String]()
+    /*
+    "What walks on four legs in the morning, two legs in the afternoon, and three legs in the evening?"                                                                                                      -> "man",
+    "I am built without bricks, wood, or stone, and offer a refuge when you feel alone. I can be empty, full of sorrow, or full of light. I grow bigger as you get older, and you only own one. What am I? " -> "memory",
+    "I am weightless and can be seen, but you can only truly feel me when I'm gone. I am the great equalizer, yet no one can own me. I steal your moments, but give you experience in return. What am I? "   -> "time",
+    "I have no voice, but I can imitate yours perfectly. I follow you in the day, yet vanish when the sun sets completely. I am your constant companion, yet hold no substance. What am I? "                 -> "shadow",
+    "I travel without a single step and create pictures you cannot see. I have no hands, but I can break a house into dust. I am feared, but I am necessary. Who am I? "                                     -> "wind",
+    "I am always hungry, I must always be fed. The finger I lick will soon turn red. I start small, but I can consume the entire world. Who am I? "                                                          -> "fire"
+    ) */
+  def addRiddle(riddle: String, answer: String) = this.riddlesAndAnswers + (riddle -> answer)
+
+    /* Method checking if the player correctly guessed the answer. The method checks if the chosen riddle matches the answer given by the player. */
+  def riddleIsGuessed(riddle: String, answer: String) = this.riddlesAndAnswers(riddle) == answer.toLowerCase
+
+    /* Method checking if the player won the riddle challenge. The challenge is won if the player answers correctly three executive riddles. */
+  def isWon =
+    val threeRiddles = scala.util.Random.shuffle(riddlesAndAnswers).take(3)
+    threeRiddles.forall(riddleIsGuessed)
+
+end RiddlesLevel
+
+class FightSceane(name: String, description: String) extends Level(name, description):
+  ???
