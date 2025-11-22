@@ -6,10 +6,13 @@ package o1.game
 class World:
 
   val title = "The exemplary title" // change it later
-
   private val nothingField     = Level("Nothing Field", "The place where it all begins...\nYou have no other option than to go forward.")
+
+  /* adds the player to the game in the initial position, nothingField. */
+  val player = PlayerObject(nothingField, this)
+
   private val crossRoads       = Level("Cross Roads", "The place where the roads are crossing...\nThe sign marks directions\nNorth -> The Great Ball of Wisdom\nEast -> Grandma's house")
-  private val glassBall        = RiddlesLevel("The Great Ball of Wisdom", "XXX")
+  private val glassBall        = RiddlesLevel("The Great Ball of Wisdom", "XXX", player)
   private val grandmasHouse    = Level("Grandma's House", "XXX")
   private val sheepAndWolf     = Level("Bloody Battlefield", "XXX")
   private val parkWithSoundMan = Level("Park. There is a Soup Man stand in the middle", "XXX")
@@ -17,11 +20,8 @@ class World:
   private val home             = Level("Home", "The end of the game")
 
   private val allLevels = Vector(nothingField, crossRoads, glassBall, grandmasHouse, sheepAndWolf, parkWithSoundMan, flowerField, home)
-  
-  /* adds the player to the game in the initial position, nothingField. */
-  val player = Player1(nothingField)
 
-  /* Sets all the neightboars for all the levels. */
+  /* Sets all the neighbors for all the levels. */
   nothingField      .setNeighbors( Vector(                           "east" -> crossRoads                                                               ) )
   crossRoads        .setNeighbors( Vector(  "north" -> glassBall,    "east" -> grandmasHouse,                               "west" -> nothingField      ) )
   glassBall         .setNeighbors( Vector(                                                     "south" -> crossRoads                                    ) )
@@ -38,7 +38,7 @@ class World:
   this.glassBall.addRiddle("I have no voice, but I can imitate yours perfectly. I follow you in the day, yet vanish when the sun sets completely. I am your constant companion, yet hold no substance. What am I? "                , "shadow")
   this.glassBall.addRiddle("I travel without a single step and create pictures you cannot see. I have no hands, but I can break a house into dust. I am feared, but I am necessary. Who am I? "                                    , "wind")
   this.glassBall.addRiddle("I am always hungry, I must always be fed. The finger I lick will soon turn red. I start small, but I can consume the entire world. Who am I? "                                                         , "fire")
-  
+
   /* REQUIREMENTS AND SITUATIONS TO COMPLETE THE GAME */
 
   def playerIsAtHome = this.player.position == home

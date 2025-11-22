@@ -15,6 +15,8 @@ import scala.collection.mutable.Map
 
 sealed class Skill(name: String, description: String):
   
+  val skillName = this.name
+  
   case object hit  extends Skill("hit", "XXX")
   case object stab extends Skill("stab", "XXX")
   case object hug  extends Skill("hug", "XXX")

@@ -3,8 +3,6 @@ package o1.game
 /* Each character in the game can be separated into an Enemy and an NPC.
    All enemies and NPCs share: */
 
-sealed trait Character
-
 /* Enemy is an extension of a Character trait. Enemies contain both characters with the ability to kill the player, as well as characters
    that cannot cause damage, but which the player has to defeat to finish the game [Note: there is one enemy, "glassBall"
    which doesn't have to be defeated. It is an optional enemy. The enemies like that are denoted by the damage = 0.
@@ -38,13 +36,13 @@ sealed trait Character
    @param description  - enemy's description
    @param healthPoints - enemy's health
    @param damage       - damage caused by an enemy to the player */
-sealed class Enemy(name: String, description: String, healthPoints: Int, damage: Int) extends Character:
 
-  case object glassBall   extends Enemy("The glass ball of wisdom", "XXX", 30, 0)
-  case object grandma     extends Enemy("Granny", "XXX", 20, 50)
-  case object sheep       extends Enemy("Big Bad Sheep", "XXX", 60, 15)
-  case object threeWolves extends Enemy("Three Little Wolves", "XXX", 120, 10)
-  case object soupMan     extends Enemy("The Soupman", "XXX", 20, 0)
 
-sealed class NPC(name: String, description: String) extends Character
+/* case object glassBall   extends Enemy("The glass ball of wisdom", "XXX", 30, 0)
+case object grandma     extends Enemy("Granny", "XXX", 20, 50)
+case object sheep       extends Enemy("Big Bad Sheep", "XXX", 60, 15)
+case object threeWolves extends Enemy("Three Little Wolves", "XXX", 120, 10)
+case object soupMan     extends Enemy("The Soupman", "XXX", 20, 0) */
+
+// class NPC(name: String, description: String) extends Character
 /* In development */
