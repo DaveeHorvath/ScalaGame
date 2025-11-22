@@ -15,12 +15,12 @@ object AdventureTextUI:
     var posX = 0
     var posY = 0
     var character =
-      "      :"+
-      " #### :"+
-      " #  # :"+
-      " #  # :"+
-      " #### :"+
-      "      "
+      "1     :"+
+      "2#### :"+
+      "3#  # :"+
+      "4#  # :"+
+      "5#### :"+
+      "6     "
     val z = character.split(":").zipWithIndex
     val clear = "\u001b[2J"
     val up = "\u001b[2E"
@@ -35,10 +35,10 @@ object AdventureTextUI:
     "mkfifo sillyNamedPipe".!
     "rm -f inputPipe".!
     "mkfifo inputPipe".!
-    "gnome-terminal --geometry=102x5 --hide-menubar --zoom=1 -- bash -c 'tput civis; while true; do cat ./inputPipe; done'".!
+    //"gnome-terminal --geometry=102x5 --hide-menubar --zoom=1 -- bash -c 'tput civis; while true; do cat ./inputPipe; done'".!
     "gnome-terminal --geometry=202x62 --hide-menubar --zoom=0.7 -- bash -c 'tput civis; while true; do cat ./sillyNamedPipe; done'".!
     System.setOut(new PrintStream(new FileOutputStream("./sillyNamedPipe")))
-    System.setIn(new FileInputStream("./inputPipe"))
+    //System.setIn(new FileInputStream("./inputPipe"))
     var buffer = scala.collection.mutable.Map[Int, String]() // list of rows
 
 
