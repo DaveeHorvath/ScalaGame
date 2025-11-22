@@ -37,7 +37,8 @@ object AdventureTextUI:
     "mkfifo inputPipe".!
     //"gnome-terminal --geometry=102x5 --hide-menubar --zoom=1 -- bash -c 'tput civis; while true; do cat ./inputPipe; done'".!
     "gnome-terminal --geometry=202x62 --hide-menubar --zoom=0.7 -- bash -c 'tput civis; while true; do cat ./sillyNamedPipe; done'".!
-    System.setOut(new PrintStream(new FileOutputStream("./sillyNamedPipe")))
+    var stream = new PrintStream(new FileOutputStream("./sillyNamedPipe"))
+    System.setOut(stream)
     //System.setIn(new FileInputStream("./inputPipe"))
     var buffer = scala.collection.mutable.Map[Int, String]() // list of rows
 
@@ -58,25 +59,32 @@ object AdventureTextUI:
     while true do
       // read updates
 
-      // compute changed rows
+      // compute changed rows - parallel
       z.foreach((line, row) =>
-        updateQueue = updateQueue :+ row
         buffer(row) = "█" * posX + line + "█" * (200 - (posX + 5))
       )
 
+      /* original implementation -> syscall abuse bad
       // single thread print
-      updateQueue.foreach(target =>
-        print(down)
+      updateQueue.reverse.foreach(target =>
+        while target > currentRow do
+        {
+          print(down)
+          currentRow += 1
+        }
         print(erase)
         println(buffer(currentRow))
-        currentRow += 1
         Console.flush()
       )
-      updateQueue.foreach(target =>
+
+      while currentRow > 0 do {
         currentRow -= 1
         print(up)
-      )
+      }
       updateQueue = Array[Int]()
       // move back up
-      Thread.sleep(200)
+      */
+      stream.write((clear + "\n" + buffer.values.mkString("\n")).getBytes("UTF-8"))
+
+      Thread.sleep(200) // strong framerate -> no proper double buffer yet
   }
