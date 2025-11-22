@@ -54,9 +54,9 @@
         for (let y = 0; y < 5; y++) {
             for (let x = 0; x < 5; x++) {
                 var a = document.getElementById("block").appendChild(document.getElementById("original").cloneNode())
-                a.setAttribute("id", "" + y + ":" + x)
+                a.setAttribute("id", "" + y.toString() + ":" + x.toString())
 
-                a.addEventListener("click", (e)=>changeColor("" + y + ":" + x) )
+                a.addEventListener("click", (e)=>changeColor("" + y.toString() + ":" + x.toString()) )
             }
         }
         document.getElementById("original").style.display = "none"
@@ -74,9 +74,9 @@
             for (let j = 0; j < y; j++) {
                 for (let i = 0; i < x; i++) {
                     var a = block.appendChild( document.getElementById("original").cloneNode() )
-                    a.setAttribute("id", "" + j + i)
+                    a.setAttribute("id", "" + j.toString() + ":" + i.toString())
 
-                    a.addEventListener("click", (e)=>changeColor("" + j + i) )
+                    a.addEventListener("click", (e)=>changeColor("" + j.toString() + ":" + i.toString()) )
                 }
             }
             document.getElementById("original").style.display = "none"
@@ -101,7 +101,7 @@
                     var block = document.getElementById("" + j + ":" + i)
                     data.push( block.getAttribute("data-color") || "0" )
                 }
-                data.push("\n")
+                data.push(":")
             }
             console.log(data.join(""))
         })
