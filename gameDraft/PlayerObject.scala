@@ -1,25 +1,22 @@
-package o1.game
+package o1.gameDraft
 
 import scala.collection.mutable.Map
 
-class PlayerObject(initialLocation: Level, world: World) extends GameObjects( "XXX", false, world): // change int to something else
+class PlayerObject(renderable     : String,       // the form that is displayed to the World
+                   worldID        : Int,          // the ID of the world the player is located in 
+                   initialPosition: (Int, Int) ): // initial position of the player
 
   /*                    VARIABLES STORED IN PLAYER (INSIDES)                           */
+  private var posX: Int = 0
+  private var posY: Int = 0
+  private var pos : (Int, Int) = initialPosition
 
-  var posX: Int = 0
-  var posY: Int = 0
-
-  override def width: Int => 0 = ???
-  override def height: Int => 0 = ???
-
-  // POSITION OF PLAYER'S FEET AT A CURRENT TIME
-  private var currentLocation: Level = initialLocation
   // THE DIRECTION AT WHICH THE CHARACTER IS FACING
   private var currentFacing = ???
   // SKILLS OBTAINED BY THE PLAYER WITH A GIVEN NAME
-  private var skills = Map[String, Skill]()
+  private val skills = Map[String, Skill]()
   // ITEMS COLLECTED BY THE PLAYER WITH A GIVEN NAME
-  private var inventory = Map[String, Object]()
+  private val inventory = Map[String, Item]()
   // AMOUNT OF MONEY CHARACTER HAS. INITIALLY SET TO 0 (WE ARE POOR, OK?)
   private var money = 0.0
   /* PLAYER'S HAPPINESS LEVEL. THE NUMBER OSCILATES BETWEEN 0.0 AND 1.0.
@@ -32,7 +29,8 @@ class PlayerObject(initialLocation: Level, world: World) extends GameObjects( "X
      HEALTH LEVEL DECREASES WHEN THE CHARACTER TAKES DAMAGE.
      HEALTH LEVEL CAN BE REGAINED IF WE USE SPECIAL OBJECTS FX. COOKIES. HOWEVER, HEALTH LEVEL CAN NEVER EXCEED 42. */
   private var healthLevel: Int = 42
-
+  
+  
   /*                    HAPPINESS LEVEL FUNCTIONS                           */
 
   /* returns the happiness level of the player*/ 
@@ -49,10 +47,11 @@ class PlayerObject(initialLocation: Level, world: World) extends GameObjects( "X
     else
       this.happinesLevel = potentialHappiness
 
+
   /*                    HEALTH LEVEL FUNCTIONS                           */
 
   /* returns the health level of the player*/
-  def howHealthy = this.happinesLevel
+  def howHealthy = this.healthLevel
   /* changes the health level of the player by the given amount. If x is negative, then the health level decreases.
      Health level can be a maximum of 100. There is no minimum; however, if the health level is smaller than or equal to 0, the game is lost.
      If the player reached health level 100 and gains positive health, the health level won't change. */
@@ -63,23 +62,20 @@ class PlayerObject(initialLocation: Level, world: World) extends GameObjects( "X
     else
       this.healthLevel = potentialHealth
 
+
   /*                    POSITION FUNCTIONS                           */
 
-  /* returns current position of a player */
-  def position = this.currentLocation
-  /* Method allowing the player to move from one location to the other. The player moves to the location specified by the direction, as assigned in the "World".
-     If a location exists, the player's position is updated the communicate "You go ..." is displayed. If the location is invalid, the player states in the same position
-     and communicates "You can't go ..." appreas */
-  def go(direction: String) =
-    val destination = this.currentLocation.neighbor(direction)
-    this.currentLocation = destination.getOrElse(this.currentLocation)
-    if destination.isDefined then s"You go $direction." else s"You can't go $direction."
-  /* teleports the player from one level to the other after fx. Completing the level. */
-  def teleport(destination: Level) =
-    this.currentLocation = destination
 
-  /*                    SKILLS FUNCTIONS                           */
+
+
+  /*                    OBJECT FUNCTIONS                           */
 
   /* adds new skill to the list of skills the player has */
-  def addSkill(skill: Skill) = this.skills += skill.skillName -> skill
+  def interractWith(gameObjects: GameObjects) = gameObjects.interract(this)
+  
+  /* adds new item to the list of items the player has */
+  def addItem(item: Item) = this.inventory += (item.name -> item)
 
+  def addSkill(skill: Skill) = this.skills += (skill.name -> skill)
+
+end PlayerObject
