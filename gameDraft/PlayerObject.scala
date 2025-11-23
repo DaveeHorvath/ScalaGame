@@ -61,6 +61,11 @@ class PlayerObject(renderable     : String,       // the form that is displayed 
       this.healthLevel = 100
     else
       this.healthLevel = potentialHealth
+      
+  /*                    MONEY FUNCTIONS                           */
+  def howMuchMoney = this.money
+  
+  def addMoney(change: Double) = this.money + change
 
 
   /*                    POSITION FUNCTIONS                           */
@@ -75,7 +80,23 @@ class PlayerObject(renderable     : String,       // the form that is displayed 
   
   /* adds new item to the list of items the player has */
   def addItem(item: Item) = this.inventory += (item.name -> item)
+  def removeItem(itemName: String): String =
+    this.inventory.get(itemName) match {
+        case Some(i) =>
+          this.inventory.remove(itemName)
+          s"You drop the $itemName."
+        case None =>
+          "You don't have that!"
+    }
+  // Determines whether the player is carrying an item of the given name.
+  def hasItem(itemName: String): Boolean =
+    this.inventory.contains(itemName)
+    
+  def whatInInventory = this.inventory
+
 
   def addSkill(skill: Skill) = this.skills += (skill.name -> skill)
+  
+  def hasSkill(skillName: String) = this.skills.contains(skillName)
 
 end PlayerObject

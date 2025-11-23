@@ -28,6 +28,21 @@ class Enemy (renderable  : String,             // the form that is displayed to 
       case Some(x) => this.healthLevel -= x
       case None    => this.healthLevel
     }
+  
+  def isDead = this.healthLevel <= 0
+  
+  def die =
+    if this.isDead then
+      this.interactable = false
+
+  override def toString: String = 
+    if this.isDead then
+      s"${this.name}: ${this.description}" +
+      s"\nis alive: ${this.isDead}"
+    else
+      s"${this.name}: ${this.description}" +
+      s"\nis alive: ${this.isDead}" +
+      s"\n health level: ${this.healthLevel}"
 
   override def interract(player: PlayerObject): String =
     s"You fight with ${this.name}."
