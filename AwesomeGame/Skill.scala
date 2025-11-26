@@ -1,6 +1,6 @@
-package o1.gameDraft
+package o1.AwesomeGame
 
-import o1.gameDraft.Enemies.Enemy
+import o1.AwesomeGame.Enemies.Enemy
 
 class Skill(val name       : String,       // the name of the skill
             val description: String,       // the description of the skill
@@ -9,7 +9,7 @@ class Skill(val name       : String,       // the name of the skill
   override def toString: String = 
     s"${this.name}: ${this.description}"
   
-  def use(enemy: Enemy): String =
-    enemy.takeDemmage(this)
-    s"You ${this.name} ${enemy.name}. New stats:\n ${enemy.name}'s health: ${enemy.howHealthy}\n demage: ${enemy.howMuchDemage}."
+  def use = this.demage.getOrElse(0)
+
+end Skill
 

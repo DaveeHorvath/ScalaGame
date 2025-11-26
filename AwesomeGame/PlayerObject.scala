@@ -1,20 +1,13 @@
-package o1.gameDraft
+package o1.AwesomeGame
 
 import scala.collection.mutable.Map
 
-class PlayerObject(renderable     : String,       // the form that is displayed to the World
-                   worldID        : Int,          // the ID of the world the player is located in 
-                   initialPosition: (Int, Int) ): // initial position of the player
+class PlayerObject(world: World, initialPosition: Area):
 
-  /*                    VARIABLES STORED IN PLAYER (INSIDES)                           */
-  private var posX: Int = 0
-  private var posY: Int = 0
-  private var pos : (Int, Int) = initialPosition
+  private var quitCommandGiven = false              // one-way flag
+  def hasQuit = this.quitCommandGiven
 
-  // THE DIRECTION AT WHICH THE CHARACTER IS FACING
-  private var currentFacing = ???
-  // SKILLS OBTAINED BY THE PLAYER WITH A GIVEN NAME
-  private val skills = Map[String, Skill]()
+  private var currentLocation = this.initialPosition
   // ITEMS COLLECTED BY THE PLAYER WITH A GIVEN NAME
   private val inventory = Map[String, Item]()
   // AMOUNT OF MONEY CHARACTER HAS. INITIALLY SET TO 0 (WE ARE POOR, OK?)
@@ -65,21 +58,24 @@ class PlayerObject(renderable     : String,       // the form that is displayed 
   /*                    MONEY FUNCTIONS                           */
   def howMuchMoney = this.money
   
-  def addMoney(change: Double) = this.money + change
+  def addMoney(change: Double) = this.money += change
 
 
   /*                    POSITION FUNCTIONS                           */
 
+  def location = this.currentLocation
 
+  def go(direction: String) =
+    val destination = this.location.neighbor(direction)
+    this.currentLocation = destination.getOrElse(this.currentLocation)
+    if destination.isDefined then s"You go $direction." else s"You can't go $direction."
 
 
   /*                    OBJECT FUNCTIONS                           */
 
-  /* adds new skill to the list of skills the player has */
-  def interractWith(gameObjects: GameObjects) = gameObjects.interract(this)
-  
   /* adds new item to the list of items the player has */
   def addItem(item: Item) = this.inventory += (item.name -> item)
+
   def removeItem(itemName: String): String =
     this.inventory.get(itemName) match {
         case Some(i) =>
@@ -94,9 +90,32 @@ class PlayerObject(renderable     : String,       // the form that is displayed 
     
   def whatInInventory = this.inventory
 
-
-  def addSkill(skill: Skill) = this.skills += (skill.name -> skill)
+  // talk_to grandma
+  // talk_to grandma: I want cookies!
+  def interact(name: String) =
+    val n = name.split(": ").head
+    val in = name.split(": ").drop(1).mkString
+    if in.length > 0 then
+      this.currentLocation.getEnemyWithName(n) match {
+        case None => s"Did you halucinate talking to ${n}?"
+        case Some(enemy) => enemy.talkTo(this, in)
+      }
+    else
+      this.currentLocation.getEnemyWithName(n) match {
+        case None => s"Did you halucinate seeing ${n}? Are you sure you aren't going insane?"
+        case Some(enemy) => enemy.interract(this)
+      }
   
-  def hasSkill(skillName: String) = this.skills.contains(skillName)
+  def get(itemName: String): String =
+    this.currentLocation.removeItem(itemName) match
+      case Some(i) =>
+        this.inventory += itemName -> i
+        s"You pick up the $itemName."
+      case None    =>
+        s"There is no $itemName here to pick up."
+  
+
+
+  def getHelpString: String = "no help for strong people"
 
 end PlayerObject
