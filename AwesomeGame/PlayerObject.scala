@@ -17,7 +17,7 @@ class PlayerObject(world: World, initialPosition: Area):
      X = 5.0 - PLAYER IS ON AVERAGE HAPPY. IF YOU REACH THE HOUSE WITH A HAPPINESS LEVEL OF 0.5, YOU GET A SPECIAL MESSAGE OF 'THE CHARACTER IS STARING AT THE WALL'.
      X > 0.5 - PLAYER IS HAPPY. YOU WIN, CONGRATS.
     INITIALLY THE PLAYER IS AVERAGE HAPPY. */
-  private var happinesLevel: Double = 0.5
+  private var happinesLevel: Double = 0.2
   /* PLAYER'S HEALTH LEVEL. WE START THE GAME WITH AN INITIAL (AND MAXIMUM) HEAL LEVEL OF 42.
      HEALTH LEVEL DECREASES WHEN THE CHARACTER TAKES DAMAGE.
      HEALTH LEVEL CAN BE REGAINED IF WE USE SPECIAL OBJECTS FX. COOKIES. HOWEVER, HEALTH LEVEL CAN NEVER EXCEED 42. */
@@ -26,8 +26,15 @@ class PlayerObject(world: World, initialPosition: Area):
   
   /*                    HAPPINESS LEVEL FUNCTIONS                           */
 
+  def quit() =
+    quitCommandGiven = true
+    "You decide to just give up, lie down on the ground, and ignore all future instructions"
+
   /* returns the happiness level of the player*/ 
   def howHappy = this.happinesLevel
+  def getHappiness():String =
+    val intValue = (howHappy * 10).toInt
+    s"Happiness Level: ${intValue}/10 [${"#" * intValue}${" " * (10 - intValue)}]"
   /* changes the happiness level of the player by the given amount. If x is negative, then the happiness level decreases.
      Happiness level can be a minimum of 0.0 and max 1.0. If the player achieved happiness level 0.0 and gains negative happiness, the happiness level doesn't change.
      Similarly, if the player reached happiness level 1.0 and gains positive happiness, the happiness level won't change. */
@@ -54,12 +61,6 @@ class PlayerObject(world: World, initialPosition: Area):
       this.healthLevel = 100
     else
       this.healthLevel = potentialHealth
-      
-  /*                    MONEY FUNCTIONS                           */
-  def howMuchMoney = this.money
-  
-  def addMoney(change: Double) = this.money += change
-
 
   /*                    POSITION FUNCTIONS                           */
 
@@ -75,6 +76,13 @@ class PlayerObject(world: World, initialPosition: Area):
 
   /* adds new item to the list of items the player has */
   def addItem(item: Item) = this.inventory += (item.name -> item)
+  def examine(itemName: String): String =
+    this.inventory.get(itemName) match {
+        case Some(i) =>
+          i.description
+        case None =>
+          s"Are you sure that ${itemName} actually exists? You definitely don't have it."
+    }
 
   def removeItem(itemName: String): String =
     this.inventory.get(itemName) match {
@@ -87,9 +95,14 @@ class PlayerObject(world: World, initialPosition: Area):
   // Determines whether the player is carrying an item of the given name.
   def hasItem(itemName: String): Boolean =
     this.inventory.contains(itemName)
-    
+  
   def whatInInventory = this.inventory
-
+    
+  def getInventoryString =
+    if this.inventory.keys.toList.length == 0 then
+      "Your bag of bags is empty, get your stuff together!"
+    else
+      this.inventory.keys.mkString(", ")
   // talk_to grandma
   // talk_to grandma: I want cookies!
   def interact(name: String) =

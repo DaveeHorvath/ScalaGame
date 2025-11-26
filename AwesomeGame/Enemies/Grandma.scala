@@ -41,19 +41,25 @@ class Grandma(val GrandmaWorld: World)
     gainedItems.keys.toList.sorted  == this.requiredObjects.keys.toList.sorted
     
   def ifSuccessfullCookies(player: PlayerObject) =
+    val cookies = Item(this.world, "cookies", "delicious cookies from your grandma")
+    player.addItem(cookies)
     player.changeHappines(0.2)
-    s"Thank you darling! You are amazing. Come here, give me a hug."
+    s"Thank you darling! You are amazing. Come here, give me a hug.\nYou gain: ${cookies.name}"
 
   override def interract(player: PlayerObject): String =
     if this.isStarted then
       if this.playerSuccessInObjects(player) then
         this.ifSuccessfullCookies(player)
       else
-        player.changeHappines(-0.1)
-        "YOU HAVE FAILED"
+        player.changeHappines(-0.2)
+        "YOU HAVE FAILED. NO MORE TRIES"
     // this is called if player menaged to fuck up baking cookies
     else
-      playerInventoryBeforeGrandma = this.takeInventory(player).clone()
-      this.bakeCookies
+      this.takeInventory(player).keys.toList.foreach(x => requiredObjects.remove(x))
+      if requiredObjects.keys.toList.length == 0 then
+        s"How did you know! Are you a mind reader???????" + ifSuccessfullCookies(player)
+      else
+        playerInventoryBeforeGrandma = this.takeInventory(player).clone()
+        this.bakeCookies
       
 end Grandma

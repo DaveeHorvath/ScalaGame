@@ -34,7 +34,7 @@ class World:
   grandmasHouseGarden.setNeighbors( Vector(  "north" -> parkWithSoundMan, "south" -> grandmasHouseLivingRoom) )
   grandmasHouseBedroom1.setNeighbors( Vector( "west" -> grandmasHouseCorridor ) )
   grandmasHouseBathroom.setNeighbors( Vector( "west" -> grandmasHouseKitchen ) )
-  parkWithSoundMan  .setNeighbors( Vector( "east" -> grandmasHouseGarden, "south" -> home ) )
+  parkWithSoundMan  .setNeighbors( Vector( "east" -> home, "south" -> grandmasHouseGarden ) )
   home              .setNeighbors( Vector( "west" -> parkWithSoundMan) )
 
   val destination = this.home
@@ -88,16 +88,14 @@ class World:
 
 /* CONDITIONS TO WIN */
 
-  def isComplete = this.player.location == this.home && this.player.howHappy > 0.5
-
-  def isOver = this.isComplete || this.player.hasQuit
+  def isOver = this.player.location == this.destination || this.player.hasQuit
 
   def goodbyeMessage =
-    if this.isComplete then
+    if this.player.location == this.destination && this.player.howHappy > 0.5 then
       "You made it home and you are happy! Isn't that awesome? You can chill now and watch TV."
-    else if this.player.location == this.home && this.player.howHappy == 0.5 then
+    else if this.player.location == this.destination && this.player.howHappy == 0.5 then
       "You aren't happy, but you are also not unhappy. You come back home thinking about the life without mining you have. You stare at the wall for hours."
-    else if this.player.location == this.home && this.player.howHappy < 0.5 then
+    else if this.player.location == this.destination && this.player.howHappy < 0.5 then
       "You are very miserable :("
     else  // game over due to player quitting
       "Quitter!"

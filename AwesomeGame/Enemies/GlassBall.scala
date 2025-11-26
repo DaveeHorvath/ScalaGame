@@ -33,12 +33,12 @@ class GlassBall(val GlassWorld: World)
     else
       s"Sorry, loser. You have used all 3/3 attempts. The Glass Ball of Wisdom was so done with you that it shattered into a million pieces. Better luck next time."
 
-  def answerIsCorrect(playersAnswer: String, gainedSkill: Skill, player: PlayerObject): String =
+  def answerIsCorrect(playersAnswer: String, player: PlayerObject): String =
     val riddleAndAnswer = this.chosenRiddle(0)
     if riddleAndAnswer._2 == playersAnswer.toLowerCase then
       this.correctAnswers += 1
       if this.correctAnswers == 3 then
-        this.whenWon(gainedSkill, player)
+        this.whenWon(player)
       else
         s" Correct!\n ${this.askRiddle}"
     else
@@ -47,13 +47,12 @@ class GlassBall(val GlassWorld: World)
       s"Wrong answer. You have to try again. You have ${this.availableAttempts} available attempts."
 
   /* Method checking if the player won the riddle challenge. The challenge is won if the player answers correctly three executive riddles. */
-  private def whenWon(gainedSkill: Skill, player: PlayerObject) =
+  private def whenWon(player: PlayerObject) =
       this.isInterractable = false
-      player.addMoney(10)
       player.changeHappines(0.10)
       s"You are a winner!"
   
   override def interract(player: PlayerObject): String = this.askRiddle
 
-  override def talkTo(player: PlayerObject, cont: String): String = answerIsCorrect(cont, new Skill("looking pretty",":)",None), player)
+  override def talkTo(player: PlayerObject, cont: String): String = answerIsCorrect(cont, player)
 end GlassBall
