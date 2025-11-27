@@ -36,8 +36,8 @@ class SoupMan(val soupWorld: World)
     s"\nBefore you attempt to cheapen this masterpiece, tell me: Do you understand the value of a soup that has been gazed upon by a sentient swan?" +
     s"\nWhat do you answer?" + 
     s"\na. That sounds highly unsanitary. Swans carry diseases." + // Incerrect
-    s"\nb. A swan's gaze! That must add at least 450 gold to the value alone. I am in awe." + // Correct
-    s"\nc. I have 500 gold. Take it, I'm starving, and let's skip the swan story." // Incorrect
+    s"\nb. A swan's gaze! That must add at least .9 happiness to the value alone. I am in awe." + // Correct
+    s"\nc. I have .9 happiness. Take it all, I'm starving, and let's skip the swan story." // Incorrect
   
   def negotiatePriceRound2(player: PlayerObject) =
     count += 1
@@ -45,7 +45,7 @@ class SoupMan(val soupWorld: World)
     s"But I must consider my overhead! This broth simmers in a pot made from the melted-down regrets of a retired pirate. How can you justify a lower price?" +
     s"\nWhat do you answer?" + 
     s"\na. Regrets are free. Pirates have lots of them. You're trying to con me." + // Incerrect
-    s"\nb. Melted metal costs money. I'll pay 50 gold for the soup, and you keep the pot." + // Incorrect
+    s"\nb. Melted metal costs money. I'll pay in attention (.1 happiness) for the soup, and you keep the pot." + // Incorrect
     s"\nc. While the pirate's remorse is valuable, true regret is lightweight. Therefore, the pot is a meager 100 gold, which I will not pay for soup." // Correct
     
   def negotiatePriceRound3(player: PlayerObject) =
