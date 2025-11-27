@@ -9,7 +9,7 @@ import o1.AwesomeGame.{PlayerObject, Skill, Soup, World}
                  description : String,             // the description of the object
                  initialHealthLevel : Int,         // the initial health level of the enemy, aka how hard you have to hit it to kill it
                  demage      : Option[Int])        //damage caused by the enemy's attack if any
-  extends Enemy( "XXX", interactable, worldID, "The Soup Man", "XXX", 20, None): */
+  extends Enemy( "", interactable, worldID, "The Soup Man", "It is the dirtman (https://www.youtube.com/shorts/Su4Kb-roLZE) but for soup, he really likes selling it as well. Also really likes to negotiate!", 20, None): */
 
 class SoupMan(val soupWorld: World)
   extends Enemy(soupWorld, "the soup man", "Soup Man from your local town. He makes the greatest soup of all times.", 20):

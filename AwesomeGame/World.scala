@@ -14,14 +14,14 @@ class World:
   val player = PlayerObject(this, nothingField)
 
   private val crossRoads                 = Area("Cross Roads", "The place where the roads are crossing...\nThe sign marks directions\nNorth -> The Great Ball of Wisdom\nEast -> Grandma's house")
-  private val glassBall                  = Area("The Great Ball of Wisdom", "XXX")
-  private val grandmasHouseLivingRoom    = Area("Grandma's House: Living Room", "XXX")
-  private val grandmasHouseKitchen       = Area("Grandma's House: Kitchen", "XXX")
-  private val grandmasHouseCorridor      = Area("Grandma's House: Corridor", "XXX")
-  private val grandmasHouseGarden        = Area("Grandma's House: Garden", "XXX")
-  private val grandmasHouseBedroom1     = Area("Grandma's House: Bedroom 1", "XXX")
-  private val grandmasHouseBathroom      = Area("Grandma's House: Bathroom", "XXX")
-  private val parkWithSoundMan           = Area("Park. There is a Soup Man stand in the middle", "XXX")
+  private val glassBall                  = Area("The Great Ball of Wisdom", "A dark room, with a slight glow in the middle, probably forgot to change the lightbulb.")
+  private val grandmasHouseLivingRoom    = Area("Grandma's House: Living Room", "Lively 90's old person home with a bright green couch and a lovely old lady.")
+  private val grandmasHouseKitchen       = Area("Grandma's House: Kitchen", "Tiled floors and cooking equipment give this room almost an industrial feel.")
+  private val grandmasHouseCorridor      = Area("Grandma's House: Corridor", "Its just like, you know, a corridor?")
+  private val grandmasHouseGarden        = Area("Grandma's House: Garden", "The smell of greens are hitting your nose, something has to keep the old people smiling...")
+  private val grandmasHouseBedroom1     = Area("Grandma's House: Bedroom", "Grandmas bedroom is a place where few will go and even less returned unharmed")
+  private val grandmasHouseBathroom      = Area("Grandma's House: Bathroom", "*Toilet noises*")
+  private val parkWithSoundMan           = Area("Park. There is a Soup Man stand in the middle", "Very grassy place with road and benches for the homeless")
   private val home                        = Area("Home", "The end of the game")
 
   /* Sets all the neighbors for all the levels. */
